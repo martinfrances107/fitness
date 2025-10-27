@@ -1,3 +1,2 @@
 #!/bin/bash
-RUST_LOG=info cargo run < ./Fitness.md > interval.dat
-gnuplot interval.gnuplot > fitness.png
+cat Fitness.md | RUST_LOG=info cargo run  | gnuplot interval.gnuplot > fitness.png

@@ -1,2 +1,2 @@
 set terminal png
-plot "interval.dat" with linespoints title "Time between events (hrs)"
+plot "/dev/stdin" with linespoints title "Time between events (hrs)"
