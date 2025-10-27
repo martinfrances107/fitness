@@ -1,44 +1,59 @@
 # Fitness
 
- A visualization tool written in [rust](https://www.rust-lang.org/)
+A visualization tool written in [rust](https://www.rust-lang.org/)
 
- Produces a chart which shows the interval between bouts of activity.
+A super minimal approach, no website, just a script that parses a markdown file and updates the embedded chart.
 
- A markdown file with a similar format to
+The ./update.sh script produces a chart which shows the interval between bouts of activity.
+
+ A markdown file 'Fitness.md' has this format
 
  ```markdown
- # Fitness
- 12 Oct 2025
- | Sun   | Mon   | Tue   | Wed   | Thu   | Fri   | Sat   |
- |:-:    |:-:    |:-:    |:-:    |:-:    |:-:    |:-:    |
- |  X    |   X   | 17:00 | 10:00 |  X    | 04:00 | 09:00 |
- | 15:00 | 23:00 |   X   | 06:30 | 08:15 |       |       |
- ```
-
-Which render to : -
- # Fitness
- 12 Oct 2025
+# Fitness
+12 October 2025
 | Sun   | Mon   | Tue   | Wed   | Thu   | Fri   | Sat   |
 | :-:   |:-:    |:-:    |:-:    |:-:    |:-:    |:-:    |
 |   X   |   X   | 17:00 | 10:00 |  X    | 04:00 | 09:00 |
-| 15:00 | 23:00 |   X   | 06:30 | 08:15 |       |       |
+| 15:00 | 23:00 |   X   | 06:30 | 08:15 | 15:15 | 23:30 |
+|   X   | 09:30 |       |       |       |       |       |
+
+![alt](fitness.png)
+ ```
+
+where 'X' or 'x' implies a skipped day. A empty cell is unfilled data.
+
+Which render to : -
+# Fitness
+12 October 2025
+| Sun   | Mon   | Tue   | Wed   | Thu   | Fri   | Sat   |
+| :-:   |:-:    |:-:    |:-:    |:-:    |:-:    |:-:    |
+|   X   |   X   | 17:00 | 10:00 |  X    | 04:00 | 09:00 |
+| 15:00 | 23:00 |   X   | 06:30 | 08:15 | 15:15 | 23:30 |
+|   X   | 09:30 |       |       |       |       |       |
+
+![alt](fitness.png)
 
 
+ ## How the "./update.sh" script works
 
- ## How to use
-
- Pass a markdown file to  `StdIn`  and the program outputs a list of intervals(in hrs)
+The script starts by passing the markdown into the rust binary and the program outputs a list of intervals
 
  eg
 
- 24,
- 25,
- 30,
+```txt
+ 24
+ 25
+ 30
+ ```
+
+The pipeline dumps the interval data into gnuplot which renders a png file.
 
 ```bash
  #!/bin/bash
-RUST_LOG=info cargo run < ./Fitness.md > interval.dat
-gnuplot -p interval.gnuplot
+rm fitness.png
+cat Fitness.md | cargo run  | gnuplot fitness.gnuplot > fitness.png
 ```
 
  TODO
+
+ The graphical color scheme is tuned to dark mode. -- The color scheme is hardcoded.
