@@ -6,6 +6,8 @@ description = "Track daily event"
 license = "MIT"
 authors = ["Martin Frances <martinfrances107@hotmail.com>"]
 repository = "https://github.com/martinfrances107/fitness.git"
+readme = "README.md"
+rust-version = "1.85"
 
 [dependencies]
 chrono = "0.4.42"
